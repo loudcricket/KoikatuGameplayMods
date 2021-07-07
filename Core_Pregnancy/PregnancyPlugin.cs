@@ -25,6 +25,8 @@ namespace KK_Pregnancy
             public const string GUID = "KK_Pregnancy";
         #elif AI
             public const string GUID = "AI_Pregnancy";
+        #elif HS2
+            public const string GUID = "HS2_Pregnancy";
         #endif
         public const string Version = "2.5.1";
 
@@ -108,7 +110,11 @@ namespace KK_Pregnancy
             #endif
             
             CharacterApi.RegisterExtraBehaviour<PregnancyCharaController>(GUID);
-            GameAPI.RegisterExtraBehaviour<PregnancyGameController>(GUID);
+            
+            // HS2API doesn't currently have GameAPI
+            #if (KK || AI)
+                GameAPI.RegisterExtraBehaviour<PregnancyGameController>(GUID);
+            #endif
 
             var hi = new Harmony(GUID);
             Hooks.InitHooks(hi);

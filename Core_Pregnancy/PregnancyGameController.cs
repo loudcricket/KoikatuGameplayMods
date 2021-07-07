@@ -360,7 +360,7 @@ namespace KK_Pregnancy
                     if (pd.Week >= PregnancyData.ReturnToSchoolWeek)
                         pd.Week = 0;
 
-                #elif AI
+                #elif (AI || HS2)
 
                     if (pd.Week < PregnancyData.LeaveSchoolWeek)
                     {

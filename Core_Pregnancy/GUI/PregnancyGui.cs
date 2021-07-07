@@ -46,7 +46,9 @@ namespace KK_Pregnancy
                 var unknownSprite = LoadIcon("unknown.png");
                 var leaveSprite = LoadIcon("leave.png");
 
-                StatusIcons.Init(hi, unknownSprite, pregSprite, safeSprite, riskySprite, leaveSprite);
+                #if (KK || AI)
+                    StatusIcons.Init(hi, unknownSprite, pregSprite, safeSprite, riskySprite, leaveSprite);
+                #endif
                 
                 #if KK
                     HSceneMenstrIconOverride.Init(hi, unknownSprite, pregSprite, safeSprite, riskySprite, leaveSprite);
@@ -75,7 +77,7 @@ namespace KK_Pregnancy
             
             #if KK           
                 var cat = new MakerCategory(MakerConstants.Parameter.Character.CategoryName, "Pregnancy"); //MakerConstants.Parameter.Character;
-            #elif AI
+            #elif (AI || HS2)
                 var cat = new MakerCategory(MakerConstants.Body.CategoryName, "Pregnancy");
             #endif
 

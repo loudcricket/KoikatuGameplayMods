@@ -11,6 +11,12 @@ using KKAPI.MainGame;
     using AIProject.Definitions;
 #endif
 
+#if HS2
+    using AIChara;
+    using AIProject;
+
+#endif
+
 namespace KK_Pregnancy
 {
     public static class PregnancyDataUtils
@@ -171,6 +177,60 @@ namespace KK_Pregnancy
 
                 return HeroineStatus.Unknown;  
 
+            }
+        
+        #elif HS2
+        
+        //would normally be in hs2 api main game controller. Just going to put it here for now
+        public static IEnumerable<ChaFileControl> GetRelatedChaFiles(
+                this Actor.Heroine heroine)
+            {
+                if (heroine == null)
+                    throw new ArgumentNullException(nameof (heroine));
+                HashSet<ChaFileControl> chaFileControlSet = new HashSet<ChaFileControl>();
+                chaFileControlSet.Add(heroine.chaFile);
+                return (IEnumerable<ChaFileControl>) chaFileControlSet;
+            }
+        
+        
+        
+            public static PregnancyData GetPregnancyData(this Actor.Heroine heroine)
+            {
+                if (heroine == null) return new PregnancyData();
+
+                // Figure out which data to take if there are multiple
+                // probably not necessary? null check should be enough? 
+                return heroine.GetRelatedChaFiles()
+                    .Select(GetPregnancyData)
+                    .Where(x => x != null)
+                    .OrderByDescending(x => x.PregnancyCount)
+                    .ThenByDescending(x => x.WeeksSinceLastPregnancy)
+                    .ThenByDescending(x => x.Week)
+                    .ThenByDescending(x => x.GameplayEnabled)
+                    .FirstOrDefault() ?? new PregnancyData();
+            }
+
+            public static HeroineStatus GetHeroineStatus(this Actor.Heroine heroine, PregnancyData pregData = null)
+            {
+                if (heroine == null) return HeroineStatus.Unknown;
+                if (pregData == null) pregData = heroine.GetPregnancyData();
+
+                var chaControl = heroine.chaCtrl;
+                if (chaControl == null) return HeroineStatus.Unknown;
+
+                var pregnancyWeek = pregData.Week;
+                    if (pregnancyWeek > 0)
+                    { 
+                        //haven't implemented icons yet anyway
+                        return HeroineStatus.Pregnant;
+                    }
+
+                    var pregCharCtrl = chaControl.GetComponent<PregnancyCharaController>();
+                    return !pregCharCtrl.isDangerousDay
+                        ? HeroineStatus.Safe
+                        : HeroineStatus.Risky;
+                
+                return HeroineStatus.Unknown;
             }
         #endif
         

@@ -5,7 +5,7 @@ using KKABMX.Core;
 using KKAPI.Maker;
 using KKAPI.Studio;
 using UnityEngine;
-#if AI
+#if (AI || HS2)
     using AIChara;
 #endif
 
@@ -133,7 +133,7 @@ namespace KK_Pregnancy
                 return null;
             }
 
-        #elif AI
+        #elif (AI || HS2)
 
             public override BoneModifierData GetEffect(string bone, BoneController origin, CoordinateType coordinate)
             {
