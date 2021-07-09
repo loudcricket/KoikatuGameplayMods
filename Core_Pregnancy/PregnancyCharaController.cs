@@ -20,11 +20,20 @@ namespace KK_Pregnancy
             //Set by game controller by random chance each day    
             public bool isDangerousDay = new System.Random().Next(0, 100) <= 20;
 #endif
-
+        
         public PregnancyCharaController()
         {
             Data = new PregnancyData();
             _boneEffect = new PregnancyBoneEffect(this);
+        }
+
+        public static bool InsideHScene()
+        {
+            bool insideHScene = true;
+            #if(KK || AI)
+                insideHScene = GameAPI.InsideHScene;
+            #endif
+            return insideHScene;
         }
 
         [Obsolete]
@@ -66,7 +75,7 @@ namespace KK_Pregnancy
         protected override void OnReload(GameMode currentGameMode)
         {
             
-            if (!GameAPI.InsideHScene)
+            if (InsideHScene())
             {
                 _inflationChange = 0;
                 _inflationAmount = 0;
@@ -196,7 +205,7 @@ namespace KK_Pregnancy
         {
             base.Update();
 
-            if (GameAPI.InsideHScene)
+            if (InsideHScene())
             {
                 if (PregnancyPlugin.InflationEnable.Value)
                 {
@@ -215,6 +224,7 @@ namespace KK_Pregnancy
                     {
                         _inflationChange = Mathf.Min(0, _inflationChange + GetInflationChange());
 
+                        #if(KK || AI)
                         if (PregnancyPlugin.InflationOpenClothAtMax.Value &&
                             InflationAmount >= PregnancyPlugin.InflationMaxCount.Value)
                         {
@@ -222,6 +232,7 @@ namespace KK_Pregnancy
                             if (ChaControl.fileStatus.clothesState[(int)ChaFileDefine.ClothesKind.top] == 0)
                                 ChaControl.SetClothesStateNext((int)ChaFileDefine.ClothesKind.top);
                         }
+                        #endif
                     }
                 }
                 else

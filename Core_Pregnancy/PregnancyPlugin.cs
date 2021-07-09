@@ -62,7 +62,13 @@ namespace KK_Pregnancy
             #elif AI
 
                 PregnancyProgressionSpeed = Config.Bind("General", "Pregnancy progression speed", 4,
-                    new ConfigDescription("How much faster does the in-game pregnancy progresses than the standard 4 weeks. \n\n" +
+                    new ConfigDescription("How much faster does the in-game pregnancy progress than the standard 4 weeks. \n\n" +
+                                        "x1 is 4 weeks, x2 is 2 weeks, x4 is 1 week, x10 is ~4 days.",
+                        new AcceptableValueList<int>(1, 2, 4, 10)));
+            #elif HS2
+
+                PregnancyProgressionSpeed = Config.Bind("General", "Pregnancy progression speed", 4,
+                    new ConfigDescription("Number of weeks that pregnancy progresses between h sessions (not yet implemented)  \n\n" +
                                         "x1 is 4 weeks, x2 is 2 weeks, x4 is 1 week, x10 is ~4 days.",
                         new AcceptableValueList<int>(1, 2, 4, 10)));
             #endif

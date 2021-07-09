@@ -263,7 +263,91 @@ namespace KK_Pregnancy
                     return Manager.HSceneManager.Instance?.females[0];
                 }
 
-                #endregion                              
+                #endregion   
+            
+            
+            #elif HS2
+            
+            #region InflationHS2                
+
+            
+                [HarmonyPrefix]
+                [HarmonyPatch(typeof(Sonyu), "Proc", typeof(int), typeof(HScene.AnimationListInfo))]
+                public static void Sonyu_Proc(Sonyu __instance)
+                {                    
+                    //Get current user button click type
+                    var ctrlFlag = Traverse.Create(__instance).Field("ctrlFlag").GetValue<HSceneFlagCtrl>();                                    
+                    DetermineInflationState(ctrlFlag);                   
+                }
+
+
+                [HarmonyPrefix]
+                [HarmonyPatch(typeof(Houshi), "Proc", typeof(int), typeof(HScene.AnimationListInfo))]
+                public static void Houshi_Proc(Houshi __instance)
+                {                    
+                    //Get current user button click type
+                    var ctrlFlag = Traverse.Create(__instance).Field("ctrlFlag").GetValue<HSceneFlagCtrl>(); 
+                    DetermineInflationState(ctrlFlag);                                   
+                }
+
+
+                //When user clicks finish button, set the inflation based on the button clicked
+                private static void DetermineInflationState(HSceneFlagCtrl ctrlFlag)
+                {
+                    //swallow clicked
+                    if (ctrlFlag.click == HSceneFlagCtrl.ClickKind.FinishInSide 
+                        || ctrlFlag.click == HSceneFlagCtrl.ClickKind.FinishSame  
+                        || ctrlFlag.click == HSceneFlagCtrl.ClickKind.FinishDrink ) 
+                    {
+                        // PregnancyPlugin.Logger.LogDebug($"Preg - Proc {ctrlFlag.click}");
+                        var heroine = GetLeadHeroineControl();
+                        var controller = GetEffectController(heroine);
+                        controller.AddInflation(1);                    
+                    }
+                    //spit clicked
+                    else if (ctrlFlag.click == HSceneFlagCtrl.ClickKind.FinishOutSide 
+                        || ctrlFlag.click == HSceneFlagCtrl.ClickKind.FinishVomit) 
+                    {
+                        // PregnancyPlugin.Logger.LogDebug($"Preg - Proc {ctrlFlag.click}");
+                        var heroine = GetLeadHeroineControl();
+                        var controller = GetEffectController(heroine);
+                        controller.DrainInflation(Mathf.Max(3, Mathf.CeilToInt(InflationMaxCount.Value / 2.2f)));
+                    }                        
+                }
+
+
+                //pulling out
+                [HarmonyPrefix]
+                [HarmonyPatch(typeof(Sonyu), "PullProc", typeof(float), typeof(int))]
+                public static void Sonyu_PullProc(Sonyu __instance)
+                {                    
+                    //Get current inserted state
+                    var ctrlFlag = Traverse.Create(__instance).Field("ctrlFlag").GetValue<HSceneFlagCtrl>();                                    
+                    // PregnancyPlugin.Logger.LogDebug($"Preg - PullProc {ctrlFlag.isInsert}");
+
+                    if (ctrlFlag.isInsert && _lastPullProc != ctrlFlag.isInsert)
+                    {
+                        var heroineControl = GetLeadHeroineControl();
+                        var inflationController = GetEffectController(heroineControl);
+                        inflationController.DrainInflation(Mathf.Max(3, Mathf.CeilToInt(InflationMaxCount.Value / 2.2f)));
+                    }
+
+                    _lastPullProc = ctrlFlag.isInsert;                   
+                }
+                
+
+                private static PregnancyCharaController GetEffectController(AIChara.ChaControl heroineControl)
+                {
+                    return heroineControl.GetComponent<PregnancyCharaController>();
+                }
+
+                private static AIChara.ChaControl GetLeadHeroineControl()
+                {
+                    return Manager.HSceneManager.Instance?.females[0];
+                }
+
+                #endregion
+            
             #endif
 
 

@@ -161,7 +161,7 @@ namespace KK_Pregnancy
                 }
             }
 
-        #elif AI
+        #elif (AI|| HS2)
 
             protected override void OnEndH(HScene proc, bool freeH)
             {

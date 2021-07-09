@@ -29,7 +29,7 @@ namespace KK_Pregnancy
                 {"cf_d_sk_01_00" , new BoneModifierData(new Vector3(1.00f, 1.00f, 1.00f), 1f, new Vector3( 0.03f,-0.02f , 0.12f), new Vector3(-10f, 0f, 0f))},
                 {"cf_d_sk_06_00" , new BoneModifierData(new Vector3(1.00f, 1.00f, 1.00f), 1f, new Vector3(-0.03f, 0.00f , 0.05f), new Vector3(  0f, 0f, 0f))},
                 {"cf_d_sk_02_00" , new BoneModifierData(new Vector3(1.00f, 1.00f, 1.00f), 1f, new Vector3( 0.03f, 0.00f , 0.05f), new Vector3(  0f, 0f, 0f))},
-            #elif AI
+            #elif (AI || HS2)
                 // Belly
                 {"cf_J_Spine01_s"  , new BoneModifierData(new Vector3(1.30f, 1.15f, 1.90f), 1f, new Vector3( 0.00f, 0.00f , 0.50f), new Vector3( 3f, 0f, 0f))},
                 {"cf_J_Spine02_s"  , new BoneModifierData(new Vector3(1.00f, 1.00f, 1.00f), 1f, new Vector3( 0.00f, 0.00f , 0.10f), new Vector3(-05f, 0f, 0f))},
@@ -69,7 +69,7 @@ namespace KK_Pregnancy
                 {"cf_s_leg01_R"  , new BoneModifierData(new Vector3(1.04f, 1f   , 1.04f), 1f)},
                 {"cf_s_leg02_L"  , new BoneModifierData(new Vector3(1.04f, 1f   , 1.04f), 1f)},
                 {"cf_s_leg02_R"  , new BoneModifierData(new Vector3(1.04f, 1f   , 1.04f), 1f)},
-            #elif AI
+            #elif (AI || HS2)
                 // Breasts
                 {"cf_J_Mune00_s_L" , new BoneModifierData(new Vector3(1.2f , 1.2f , 1.2f) , 1f)},
                 {"cf_J_Mune00_s_R" , new BoneModifierData(new Vector3(1.2f , 1.2f , 1.2f) , 1f)},
@@ -98,7 +98,7 @@ namespace KK_Pregnancy
 
         public override IEnumerable<string> GetAffectedBones(BoneController origin)
         {
-            if (_controller.Data.IsPregnant || MakerAPI.InsideMaker || StudioAPI.InsideStudio || PregnancyGameController.InsideHScene)
+            if (_controller.Data.IsPregnant || MakerAPI.InsideMaker || StudioAPI.InsideStudio || PregnancyCharaController.InsideHScene())
                 return _affectedBoneNames;
 
             return Enumerable.Empty<string>();
