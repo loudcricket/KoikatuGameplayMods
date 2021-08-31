@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KK_LewdCrestX", "KK_LewdCre
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pregnancy", "Pregnancy", "{1C61B7E0-3603-4193-9B05-A5FF0CAFBD11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HS2_Pregnancy", "HS2_Pregnancy\HS2_Pregnancy.csproj", "{39B7A9B3-8729-4A94-B785-B2AECA7094E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{5B1134DE-7840-4309-83F9-843606F01727}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B1134DE-7840-4309-83F9-843606F01727}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B1134DE-7840-4309-83F9-843606F01727}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39B7A9B3-8729-4A94-B785-B2AECA7094E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39B7A9B3-8729-4A94-B785-B2AECA7094E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39B7A9B3-8729-4A94-B785-B2AECA7094E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39B7A9B3-8729-4A94-B785-B2AECA7094E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{930A00A6-2935-4EA0-81F0-B16D3E71B74C} = {1C61B7E0-3603-4193-9B05-A5FF0CAFBD11}
 		{930A00A6-2935-4EA0-81F0-C16D3E71B74C} = {1C61B7E0-3603-4193-9B05-A5FF0CAFBD11}
+		{39B7A9B3-8729-4A94-B785-B2AECA7094E7} = {1C61B7E0-3603-4193-9B05-A5FF0CAFBD11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19B0272D-3305-4C60-8DD9-E15889B2FF54}

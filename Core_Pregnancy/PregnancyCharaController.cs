@@ -5,7 +5,7 @@ using KKAPI.Chara;
 using KKAPI.MainGame;
 using KKAPI.Maker;
 using UnityEngine;
-#if AI
+#if AI || HS2
     using AIChara;
 #endif
 

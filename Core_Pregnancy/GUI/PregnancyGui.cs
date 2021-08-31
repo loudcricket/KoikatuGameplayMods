@@ -75,7 +75,7 @@ namespace KK_Pregnancy
             
             #if KK           
                 var cat = new MakerCategory(MakerConstants.Parameter.Character.CategoryName, "Pregnancy"); //MakerConstants.Parameter.Character;
-            #elif AI
+            #elif AI || HS2
                 var cat = new MakerCategory(MakerConstants.Body.CategoryName, "Pregnancy");
             #endif
 

@@ -16,7 +16,7 @@ namespace KK_Pregnancy
     [BepInDependency(KKABMX_Core.GUID, "4.1")]
     #if KK
         [BepInDependency(KoikatuAPI.GUID, KoikatuAPI.VersionConst)]
-    #elif AI
+    #elif AI || HS2
         [BepInDependency(KoikatuAPI.GUID, "1.12")]
     #endif
     public partial class PregnancyPlugin : BaseUnityPlugin
@@ -25,6 +25,8 @@ namespace KK_Pregnancy
             public const string GUID = "KK_Pregnancy";
         #elif AI
             public const string GUID = "AI_Pregnancy";
+        #elif HS2
+            public const string GUID = "HS2_Pregnancy";
         #endif
         public const string Version = "2.5.2";
 

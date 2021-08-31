@@ -5,7 +5,7 @@ using KKABMX.Core;
 using KKAPI.Maker;
 using KKAPI.Studio;
 using UnityEngine;
-#if AI
+#if AI || HS2
     using AIChara;
 #endif
 
@@ -29,7 +29,7 @@ namespace KK_Pregnancy
                 {"cf_d_sk_01_00" , new BoneModifierData(new Vector3(1.00f, 1.00f, 1.00f), 1f, new Vector3( 0.03f,-0.02f , 0.12f), new Vector3(-10f, 0f, 0f))},
                 {"cf_d_sk_06_00" , new BoneModifierData(new Vector3(1.00f, 1.00f, 1.00f), 1f, new Vector3(-0.03f, 0.00f , 0.05f), new Vector3(  0f, 0f, 0f))},
                 {"cf_d_sk_02_00" , new BoneModifierData(new Vector3(1.00f, 1.00f, 1.00f), 1f, new Vector3( 0.03f, 0.00f , 0.05f), new Vector3(  0f, 0f, 0f))},
-            #elif AI
+            #elif AI || HS2
                 // Belly
                 {"cf_J_Spine01_s"  , new BoneModifierData(new Vector3(1.30f, 1.15f, 1.90f), 1f, new Vector3( 0.00f, 0.00f , 0.50f), new Vector3( 3f, 0f, 0f))},
                 {"cf_J_Spine02_s"  , new BoneModifierData(new Vector3(1.00f, 1.00f, 1.00f), 1f, new Vector3( 0.00f, 0.00f , 0.10f), new Vector3(-05f, 0f, 0f))},

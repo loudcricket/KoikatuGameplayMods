@@ -9,6 +9,8 @@ using KKAPI.MainGame;
     using AIProject;
     using AIProject.SaveData;
     using AIProject.Definitions;
+#elif HS2
+    using AIChara;
 #endif
 
 namespace KK_Pregnancy
