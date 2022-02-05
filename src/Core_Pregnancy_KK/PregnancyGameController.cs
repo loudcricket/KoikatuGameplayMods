@@ -7,6 +7,7 @@ using Manager;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using ActionGame;
+using MessagePack.Decoders;
 
 namespace KK_Pregnancy
 {
@@ -19,7 +20,7 @@ namespace KK_Pregnancy
         protected override void OnDayChange(Cycle.Week day)
         {
             // Use Sunday for weekly stuff because it is always triggered (all other days can get skipped)
-            if (day == Cycle.Week.Holiday)
+            if (day == Cycle.Week.Holiday || PregnancyPlugin.UseDaysInsteadOfWeeks.Value)
             {
                 // At start of each week increase pregnancy week counters of all pregnant characters
                 ApplyToAllDatas((chara, data) => AddPregnancyWeek(data));
@@ -96,11 +97,27 @@ namespace KK_Pregnancy
         {
             ApplyToAllDatas((chara, data) =>
             {
-                if (chara is SaveData.Heroine heroine && _startedPregnancies.Contains(heroine) && !data.IsPregnant)
+                if (chara is SaveData.Heroine heroine)
                 {
-                    data.StartPregnancy();
+                    int minWeek = PregnancyPlugin.GlobalPregnancyMinWeek.Value;
+                    int maxWeek = PregnancyPlugin.GlobalPregnancyMaxWeek.Value;
+                    if ((_startedPregnancies.Contains(heroine) || minWeek > 0) && !data.IsPregnant)
+                    {
+                        data.StartPregnancy();
+                    }
+                    
+                    if (minWeek > 0)
+                    {
+                        data.Week = minWeek;
+                    }
+                    if (data.Week > maxWeek)
+                    {
+                        data.Week = maxWeek;
+                    }
+
                     return true;
                 }
+
                 return false;
             });
             _startedPregnancies.Clear();

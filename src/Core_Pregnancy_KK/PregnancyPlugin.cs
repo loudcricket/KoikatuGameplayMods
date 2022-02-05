@@ -21,7 +21,15 @@ namespace KK_Pregnancy
         public static ConfigEntry<float> FertilityOverride { get; private set; }
         public static ConfigEntry<bool> AnalConceptionEnabled { get; private set; }
         public static ConfigEntry<bool> ShowPregnancyIconEarly { get; private set; }
+        
+        public static ConfigEntry<bool> UseDaysInsteadOfWeeks { get; private set; }
         public static ConfigEntry<int> PregnancyProgressionSpeed { get; private set; }
+        
+        public static ConfigEntry<int> GlobalPregnancyMinWeek { get; private set; }
+        
+        public static ConfigEntry<int> GlobalPregnancyMaxWeek { get; private set; }
+        
+        public static ConfigEntry<int> LeaveLength { get; private set; }
         public static ConfigEntry<bool> HSceneMenstrIconOverride { get; private set; }
 
         public static ConfigEntry<bool> InflationEnable { get; private set; }
@@ -41,10 +49,25 @@ namespace KK_Pregnancy
 
             PregnancyProgressionSpeed = Config.Bind("General", "Pregnancy progression speed", 4,
                 new ConfigDescription("How much faster does the in-game pregnancy progresses than the standard 40 weeks. " +
-                                    "It also reduces the time characters leave school for after birth.\n\n" +
-                                    "x1 is 40 weeks, x2 is 20 weeks, x4 is 10 weeks, x10 is 4 weeks.",
-                    new AcceptableValueList<int>(1, 2, 4, 10)));
+                                    "It also reduces the time characters leave school for after birth.\n",
+                    new AcceptableValueRange<int>(0, 40)));
+            
+            GlobalPregnancyMinWeek = Config.Bind("General", "Global minimum pregnancy week", 0,
+                new ConfigDescription("All characters who have not reached this week of pregnancy will reach this week " +
+                                      "of pregnancy during the next period of the day.",
+                    new AcceptableValueRange<int>(0, 40)));
+            
+            GlobalPregnancyMaxWeek = Config.Bind("General", "Global maximum pregnancy week", 62,
+                new ConfigDescription("Pregnancies will not progress past this week. The post-pregnancy leave is included" +
+                                      "in the pregnancy progression counter.",
+                    new AcceptableValueRange<int>(0, 62)));
 
+            
+            LeaveLength = Config.Bind("General", "Leave length", 7,
+                new ConfigDescription("The number of weeks someone is absent after being pregnant",
+                    new AcceptableValueRange<int>(1, 20)));
+            
+            
             ConceptionEnabled = Config.Bind("General", "Enable conception", true,
                 "Allows characters to get pregnant from vaginal sex. Doesn't affect already pregnant characters.");
 
@@ -61,6 +84,8 @@ namespace KK_Pregnancy
                 "By default pregnancy status icon in class roster is shown after a few days or weeks (the character had a chance to do the test or noticed something is wrong).\n" +
                 "Turning this on will always make the icon show up at the end of the current day.");
 
+            UseDaysInsteadOfWeeks = Config.Bind("General", "Use days instead of weeks", false, "Updates pregnancy progression daily instead of weekly." );
+
             HSceneMenstrIconOverride = Config.Bind("General", "Use custom safe/risky icons in H Scenes", true,
                 "Replaces the standard safe/risky indicators with custom indicators that can also show pregnancy and unknown status. " +
                 "If the status is unknown you will have to listen for the voice cues instead.\nChanges take effect after game restart.");
@@ -74,7 +99,7 @@ namespace KK_Pregnancy
                 "If clothes are fully on, open them when inflation reaches the max value (they 'burst' open).");
 
             InflationMaxCount = Config.Bind("Inflation", "Cum count until full", 8,
-                new ConfigDescription("How many times you have to let out inside to reach the maximum belly size.", new AcceptableValueRange<int>(2, 15)));
+                new ConfigDescription("How many times you have to let out inside to reach the maximum belly size.", new AcceptableValueRange<int>(1, 20)));
 
             LactationEnabled = Config.Bind("Lactation", "Enable lactation", true,
                 "Enable the lactation effect. For the effect to work the character has to be pregnant, or the override setting has to be enabled.");

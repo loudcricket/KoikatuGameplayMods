@@ -16,7 +16,7 @@ namespace KK_Pregnancy
         /// <summary>
         /// Week at which pegracy ends and the character returns to school
         /// </summary>
-        public static readonly int ReturnToSchoolWeek = LeaveSchoolWeek + 7;
+        public static int ReturnToSchoolWeek { get; } = LeaveSchoolWeek + PregnancyPlugin.LeaveLength.Value;
 
         #region Names of these are important, used as dictionary keys
 
